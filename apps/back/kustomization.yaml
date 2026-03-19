@@ -9,4 +9,3 @@ resources:
   - 21-app-configmap.yaml
   - 22-app-deployment.yaml
   - 23-app-service.yaml
-  - kustomization.yaml
