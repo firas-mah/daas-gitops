@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: front
-          image: docker.io/firasmah/monotest-front:run-1774367743667-front
+          image: docker.io/firasmah/monotest-front:run-1774371084813-front
           ports:
             - containerPort: 80
               protocol: TCP
