@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: back
-          image: docker.io/firasmah/monotest-back:run-1774450483596-back
+          image: docker.io/firasmah/monotest-back:webhook-1774451244071-back
           ports:
             - containerPort: 8081
               protocol: TCP
