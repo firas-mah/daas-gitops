@@ -1,21 +1,21 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: monotest-front
+  name: monotest-back
   namespace: monotest
   labels:
-    app: monotest-front
+    app: monotest-back
     app.kubernetes.io/part-of: monotest
-    app.kubernetes.io/component: front
+    app.kubernetes.io/component: back
     managed-by: daas
 spec:
   type: ClusterIP
   selector:
-    app: monotest-front
+    app: monotest-back
     app.kubernetes.io/part-of: monotest
-    app.kubernetes.io/component: front
+    app.kubernetes.io/component: back
   ports:
     - name: http
       port: 8080
-      targetPort: 80
+      targetPort: 8081
       protocol: TCP
