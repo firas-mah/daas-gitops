@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: monotest2-back
+  namespace: monotest2
+  labels:
+    app: monotest2-back
+    app.kubernetes.io/part-of: monotest2
+    app.kubernetes.io/component: back
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: monotest2-back
+    app.kubernetes.io/part-of: monotest2
+    app.kubernetes.io/component: back
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8081
+      protocol: TCP
