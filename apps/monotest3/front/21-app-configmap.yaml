@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monotest3-front-config
+  namespace: monotest3
+data:
+  _placeholder: "empty"
