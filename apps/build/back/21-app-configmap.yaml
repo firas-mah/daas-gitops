@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: build-back-config
+  namespace: build
+data:
+  _placeholder: "empty"
