@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: build-test-front-config
-  namespace: build-test
-data:
-  API_URL: "http://back:8080"
