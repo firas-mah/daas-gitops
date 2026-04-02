@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: mono55-front-config
-  namespace: mono55
-data:
-  _placeholder: "empty"
