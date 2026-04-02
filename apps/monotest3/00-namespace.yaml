@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: monotest3
-  labels:
-    managed-by: daas
-    app.kubernetes.io/name: monotest3
