@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: build-front-config
-  namespace: build
-data:
-  _placeholder: "empty"
