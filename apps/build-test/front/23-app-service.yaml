@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: build-test-front
+  namespace: build-test
+  labels:
+    app: build-test-front
+    app.kubernetes.io/part-of: build-test
+    app.kubernetes.io/component: front
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: build-test-front
+    app.kubernetes.io/part-of: build-test
+    app.kubernetes.io/component: front
+  ports:
+    - name: http
+      port: 80
+      targetPort: 4200
+      protocol: TCP
