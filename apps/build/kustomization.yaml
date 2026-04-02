@@ -4,3 +4,4 @@ resources:
   - 00-namespace.yaml
   - back
   - db
+  - front
