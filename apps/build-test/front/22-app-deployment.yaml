@@ -24,9 +24,9 @@ spec:
     spec:
       containers:
         - name: front
-          image: docker.io/firasmah/build-test-front:run-1775155921749-front
+          image: docker.io/firasmah/build-test-front:run-1775156487876-front
           ports:
-            - containerPort: 4200
+            - containerPort: 8080
               protocol: TCP
           envFrom:
             - secretRef:
@@ -44,13 +44,13 @@ spec:
               cpu: 500m
           readinessProbe:
             tcpSocket:
-              port: 4200
+              port: 8080
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 3
           livenessProbe:
             tcpSocket:
-              port: 4200
+              port: 8080
             initialDelaySeconds: 90
             periodSeconds: 10
             failureThreshold: 3
