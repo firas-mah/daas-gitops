@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: build-front
+  namespace: build
+  labels:
+    app: build-front
+    app.kubernetes.io/part-of: build
+    app.kubernetes.io/component: front
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: build-front
+      app.kubernetes.io/part-of: build
+      app.kubernetes.io/component: front
+  template:
+    metadata:
+      labels:
+        app: build-front
+        app.kubernetes.io/part-of: build
+        app.kubernetes.io/component: front
+    spec:
+      containers:
+        - name: front
+          image: docker.io/firasmah/build-front:run-1775320944581-front
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: build-front-secrets
+                optional: true
+            - configMapRef:
+                name: build-front-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
