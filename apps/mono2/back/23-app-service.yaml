@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mono2-back
+  namespace: mono2
+  labels:
+    app: mono2-back
+    app.kubernetes.io/part-of: mono2
+    app.kubernetes.io/component: back
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: mono2-back
+    app.kubernetes.io/part-of: mono2
+    app.kubernetes.io/component: back
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8081
+      protocol: TCP
