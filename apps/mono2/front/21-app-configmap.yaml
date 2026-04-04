@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mono2-front-config
+  namespace: mono2
+data:
+  _placeholder: "empty"
