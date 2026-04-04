@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mono-back-config
+  namespace: mono
+data:
+  _placeholder: "empty"
