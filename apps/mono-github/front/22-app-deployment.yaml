@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mono-github-front
+  namespace: mono-github
+  labels:
+    app: mono-github-front
+    app.kubernetes.io/part-of: mono-github
+    app.kubernetes.io/component: front
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mono-github-front
+      app.kubernetes.io/part-of: mono-github
+      app.kubernetes.io/component: front
+  template:
+    metadata:
+      labels:
+        app: mono-github-front
+        app.kubernetes.io/part-of: mono-github
+        app.kubernetes.io/component: front
+    spec:
+      containers:
+        - name: front
+          image: docker.io/firasmah/mono-front:run-1775646709241-front
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: mono-github-front-secrets
+                optional: true
+            - configMapRef:
+                name: mono-github-front-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
