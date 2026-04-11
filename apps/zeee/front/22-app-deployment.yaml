@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: front
-          image: docker.io/firasmah/zeee-front:run-1775924447273-front
+          image: docker.io/firasmah/zeee-front:push-1775924757299-front
           ports:
             - containerPort: 80
               protocol: TCP
