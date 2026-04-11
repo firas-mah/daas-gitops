@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: back
-          image: docker.io/firasmah/zeee-back:run-1775924446932-back
+          image: docker.io/firasmah/zeee-back:push-1775924756890-back
           ports:
             - containerPort: 8081
               protocol: TCP
