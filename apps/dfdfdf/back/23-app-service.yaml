@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dfdfdf-back
+  namespace: dfdfdf
+  labels:
+    app: dfdfdf-back
+    app.kubernetes.io/part-of: dfdfdf
+    app.kubernetes.io/component: back
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: dfdfdf-back
+    app.kubernetes.io/part-of: dfdfdf
+    app.kubernetes.io/component: back
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8081
+      protocol: TCP
