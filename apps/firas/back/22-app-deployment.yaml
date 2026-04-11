@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: firas-back
+  namespace: firas
+  labels:
+    app: firas-back
+    app.kubernetes.io/part-of: firas
+    app.kubernetes.io/component: back
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: firas-back
+      app.kubernetes.io/part-of: firas
+      app.kubernetes.io/component: back
+  template:
+    metadata:
+      labels:
+        app: firas-back
+        app.kubernetes.io/part-of: firas
+        app.kubernetes.io/component: back
+    spec:
+      containers:
+        - name: back
+          image: docker.io/firasmah/firas-back:run-1775907968129-back
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: firas-back-secrets
+                optional: true
+            - configMapRef:
+                name: firas-back-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
