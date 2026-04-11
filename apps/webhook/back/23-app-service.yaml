@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webhook-back
+  namespace: webhook
+  labels:
+    app: webhook-back
+    app.kubernetes.io/part-of: webhook
+    app.kubernetes.io/component: back
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: webhook-back
+    app.kubernetes.io/part-of: webhook
+    app.kubernetes.io/component: back
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8081
+      protocol: TCP
