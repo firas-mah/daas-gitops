@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dd-front
+  namespace: dd
+  labels:
+    app: dd-front
+    app.kubernetes.io/part-of: dd
+    app.kubernetes.io/component: front
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dd-front
+      app.kubernetes.io/part-of: dd
+      app.kubernetes.io/component: front
+  template:
+    metadata:
+      labels:
+        app: dd-front
+        app.kubernetes.io/part-of: dd
+        app.kubernetes.io/component: front
+    spec:
+      containers:
+        - name: front
+          image: docker.io/firasmah/dd-front:run-1776271290310-front
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: dd-front-secrets
+                optional: true
+            - configMapRef:
+                name: dd-front-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
