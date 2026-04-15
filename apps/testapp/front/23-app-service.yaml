@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: testapp-front
+  namespace: testapp
+  labels:
+    app: testapp-front
+    app.kubernetes.io/part-of: testapp
+    app.kubernetes.io/component: front
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: testapp-front
+    app.kubernetes.io/part-of: testapp
+    app.kubernetes.io/component: front
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 80
+      protocol: TCP
