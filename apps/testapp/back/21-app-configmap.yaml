@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: testapp-back-config
+  namespace: testapp
+data:
+  _placeholder: "empty"
