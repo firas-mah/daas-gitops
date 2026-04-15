@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: dd-front-config
-  namespace: dd
-data:
-  _placeholder: "empty"
