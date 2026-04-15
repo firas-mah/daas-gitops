@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: first-front-config
-  namespace: first
-data:
-  _placeholder: "empty"
