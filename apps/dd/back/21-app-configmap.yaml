@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dd-back-config
+  namespace: dd
+data:
+  _placeholder: "empty"
