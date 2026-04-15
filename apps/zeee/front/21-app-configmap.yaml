@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: zeee-front-config
-  namespace: zeee
-data:
-  _placeholder: "empty"
