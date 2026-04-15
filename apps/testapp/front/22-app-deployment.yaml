@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: front
-          image: docker.io/firasmah/testapp-front:run-1776293062131-front
+          image: docker.io/firasmah/testapp-front:push-1776293305572-front
           ports:
             - containerPort: 80
               protocol: TCP
