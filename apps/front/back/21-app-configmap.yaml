@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: front-back-config
-  namespace: front
-data:
-  _placeholder: "empty"
