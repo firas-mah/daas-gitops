@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: manual-front-config
-  namespace: manual
-data:
-  _placeholder: "empty"
