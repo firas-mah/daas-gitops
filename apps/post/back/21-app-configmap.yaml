@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: post-back-config
-  namespace: post
-data:
-  _placeholder: "empty"
