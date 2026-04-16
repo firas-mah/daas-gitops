@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: back
-          image: docker.io/firasmah/manual-back:run-1776347614056-back
+          image: docker.io/firasmah/manual-back:push-1776352561546-back
           ports:
             - containerPort: 8081
               protocol: TCP
