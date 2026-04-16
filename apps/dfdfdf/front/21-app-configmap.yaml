@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: dfdfdf-front-config
-  namespace: dfdfdf
-data:
-  _placeholder: "empty"
