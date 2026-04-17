@@ -16,6 +16,6 @@ spec:
     app.kubernetes.io/component: auth-api
   ports:
     - name: http
-      port: 8080
-      targetPort: 37187
+      port: 8081
+      targetPort: 8081
       protocol: TCP

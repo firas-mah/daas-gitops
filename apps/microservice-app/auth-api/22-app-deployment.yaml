@@ -24,9 +24,9 @@ spec:
     spec:
       containers:
         - name: auth-api
-          image: docker.io/firasmah/microservice-app-auth-api:run-1776445951676-auth-api
+          image: docker.io/firasmah/microservice-app-auth-api:run-1776464174646-auth-api
           ports:
-            - containerPort: 37187
+            - containerPort: 8081
               protocol: TCP
           envFrom:
             - secretRef:
