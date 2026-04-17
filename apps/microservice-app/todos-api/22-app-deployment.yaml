@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: todos-api
-          image: docker.io/firasmah/microservice-app-todos-api:run-1776445951818-todos-api
+          image: docker.io/firasmah/microservice-app-todos-api:run-1776464174758-todos-api
           ports:
             - containerPort: 8082
               protocol: TCP
