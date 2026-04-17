@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: log-message-processor
-          image: docker.io/firasmah/microservice-app-log-message-processor:run-1776445951803-log-message-processor
+          image: docker.io/firasmah/microservice-app-log-message-processor:run-1776464174739-log-message-processor
           ports:
             - containerPort: 8000
               protocol: TCP
