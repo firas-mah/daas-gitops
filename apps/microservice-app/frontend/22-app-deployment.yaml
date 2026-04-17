@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: docker.io/firasmah/microservice-app-frontend:run-1776445951789-frontend
+          image: docker.io/firasmah/microservice-app-frontend:run-1776464174728-frontend
           ports:
             - containerPort: 8080
               protocol: TCP
