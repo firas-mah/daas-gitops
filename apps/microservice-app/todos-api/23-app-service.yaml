@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-app-todos-api
+  namespace: microservice-app
+  labels:
+    app: microservice-app-todos-api
+    app.kubernetes.io/part-of: microservice-app
+    app.kubernetes.io/component: todos-api
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: microservice-app-todos-api
+    app.kubernetes.io/part-of: microservice-app
+    app.kubernetes.io/component: todos-api
+  ports:
+    - name: http
+      port: 8082
+      targetPort: 8082
+      protocol: TCP

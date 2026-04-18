@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-app-todos-api
+  namespace: microservice-app
+  labels:
+    app: microservice-app-todos-api
+    app.kubernetes.io/part-of: microservice-app
+    app.kubernetes.io/component: todos-api
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-app-todos-api
+      app.kubernetes.io/part-of: microservice-app
+      app.kubernetes.io/component: todos-api
+  template:
+    metadata:
+      labels:
+        app: microservice-app-todos-api
+        app.kubernetes.io/part-of: microservice-app
+        app.kubernetes.io/component: todos-api
+    spec:
+      containers:
+        - name: todos-api
+          image: docker.io/firasmah/microservice-app-todos-api:run-1776476071331-todos-api
+          ports:
+            - containerPort: 8082
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: microservice-app-todos-api-secrets
+                optional: true
+            - configMapRef:
+                name: microservice-app-todos-api-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8082
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8082
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
