@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-app-frontend
+  namespace: microservice-app
+  labels:
+    app: microservice-app-frontend
+    app.kubernetes.io/part-of: microservice-app
+    app.kubernetes.io/component: frontend
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-app-frontend
+      app.kubernetes.io/part-of: microservice-app
+      app.kubernetes.io/component: frontend
+  template:
+    metadata:
+      labels:
+        app: microservice-app-frontend
+        app.kubernetes.io/part-of: microservice-app
+        app.kubernetes.io/component: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: docker.io/firasmah/microservice-app-frontend:run-1776476071289-frontend
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: microservice-app-frontend-secrets
+                optional: true
+            - configMapRef:
+                name: microservice-app-frontend-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
