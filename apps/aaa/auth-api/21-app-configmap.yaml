@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aaa-auth-api-config
+  namespace: aaa
+data:
+  AUTH_API_PORT: "8081"
+  JWT_SECRET: "myfancysecret"
+  USERS_API_ADDRESS: "http://users-api:8083"
+  ZIPKIN_URL: "http://zipkin:9411/api/v2/spans"
