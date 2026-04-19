@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aaa-log-message-processor-config
+  namespace: aaa
+data:
+  REDIS_HOST: "redis-queue"
+  REDIS_PORT: "6379"
+  REDIS_CHANNEL: "log_channel"
+  ZIPKIN_URL: "http://zipkin:9411/api/v1/spans"

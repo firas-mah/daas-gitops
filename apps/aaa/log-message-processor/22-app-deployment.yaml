@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aaa-log-message-processor
+  namespace: aaa
+  labels:
+    app: aaa-log-message-processor
+    app.kubernetes.io/part-of: aaa
+    app.kubernetes.io/component: log-message-processor
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aaa-log-message-processor
+      app.kubernetes.io/part-of: aaa
+      app.kubernetes.io/component: log-message-processor
+  template:
+    metadata:
+      labels:
+        app: aaa-log-message-processor
+        app.kubernetes.io/part-of: aaa
+        app.kubernetes.io/component: log-message-processor
+    spec:
+      containers:
+        - name: log-message-processor
+          image: docker.io/firasmah/aaa-log-message-processor:run-1776638981820-log-message-processor
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: aaa-log-message-processor-secrets
+                optional: true
+            - configMapRef:
+                name: aaa-log-message-processor-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
