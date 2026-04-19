@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aaa-frontend
+  namespace: aaa
+  labels:
+    app: aaa-frontend
+    app.kubernetes.io/part-of: aaa
+    app.kubernetes.io/component: frontend
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aaa-frontend
+      app.kubernetes.io/part-of: aaa
+      app.kubernetes.io/component: frontend
+  template:
+    metadata:
+      labels:
+        app: aaa-frontend
+        app.kubernetes.io/part-of: aaa
+        app.kubernetes.io/component: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: docker.io/firasmah/aaa-frontend:run-1776638981784-frontend
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: aaa-frontend-secrets
+                optional: true
+            - configMapRef:
+                name: aaa-frontend-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
