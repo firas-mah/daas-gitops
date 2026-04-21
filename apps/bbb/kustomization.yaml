@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - 00-namespace.yaml
   - db
+  - log-message-processor
   - todos-api

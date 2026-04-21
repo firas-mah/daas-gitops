@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bbb-log-message-processor
+  namespace: bbb
+  labels:
+    app: bbb-log-message-processor
+    app.kubernetes.io/part-of: bbb
+    app.kubernetes.io/component: log-message-processor
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bbb-log-message-processor
+      app.kubernetes.io/part-of: bbb
+      app.kubernetes.io/component: log-message-processor
+  template:
+    metadata:
+      labels:
+        app: bbb-log-message-processor
+        app.kubernetes.io/part-of: bbb
+        app.kubernetes.io/component: log-message-processor
+    spec:
+      containers:
+        - name: log-message-processor
+          image: docker.io/firasmah/bbb-log-message-processor:run-1776789425030-log-message-processor
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: bbb-log-message-processor-secrets
+                optional: true
+            - configMapRef:
+                name: bbb-log-message-processor-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
