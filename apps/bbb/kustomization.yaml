@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - 00-namespace.yaml
   - db
+  - frontend
   - log-message-processor
   - todos-api
