@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bbb-todos-api
+  namespace: bbb
+  labels:
+    app: bbb-todos-api
+    app.kubernetes.io/part-of: bbb
+    app.kubernetes.io/component: todos-api
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bbb-todos-api
+      app.kubernetes.io/part-of: bbb
+      app.kubernetes.io/component: todos-api
+  template:
+    metadata:
+      labels:
+        app: bbb-todos-api
+        app.kubernetes.io/part-of: bbb
+        app.kubernetes.io/component: todos-api
+    spec:
+      containers:
+        - name: todos-api
+          image: docker.io/firasmah/bbb-todos-api:run-1776789425066-todos-api
+          ports:
+            - containerPort: 8082
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: bbb-todos-api-secrets
+                optional: true
+            - configMapRef:
+                name: bbb-todos-api-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8082
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8082
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
