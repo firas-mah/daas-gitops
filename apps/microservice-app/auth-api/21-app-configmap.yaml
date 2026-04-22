@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: microservice-app-auth-api-config
-  namespace: microservice-app
-data:
-  _placeholder: "empty"
