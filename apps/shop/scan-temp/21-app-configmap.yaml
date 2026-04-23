@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shop-scan-temp-config
+  namespace: shop
+data:
+  _placeholder: "empty"

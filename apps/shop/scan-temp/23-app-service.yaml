@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shop-scan-temp
+  namespace: shop
+  labels:
+    app: shop-scan-temp
+    app.kubernetes.io/part-of: shop
+    app.kubernetes.io/component: scan-temp
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: shop-scan-temp
+    app.kubernetes.io/part-of: shop
+    app.kubernetes.io/component: scan-temp
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+      protocol: TCP

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-scan-temp
+  namespace: shop
+  labels:
+    app: shop-scan-temp
+    app.kubernetes.io/part-of: shop
+    app.kubernetes.io/component: scan-temp
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shop-scan-temp
+      app.kubernetes.io/part-of: shop
+      app.kubernetes.io/component: scan-temp
+  template:
+    metadata:
+      labels:
+        app: shop-scan-temp
+        app.kubernetes.io/part-of: shop
+        app.kubernetes.io/component: scan-temp
+    spec:
+      containers:
+        - name: scan-temp
+          image: docker.io/firasmah/shop-scan-temp:run-1776960159645-scan-temp
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: shop-scan-temp-secrets
+                optional: true
+            - configMapRef:
+                name: shop-scan-temp-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
