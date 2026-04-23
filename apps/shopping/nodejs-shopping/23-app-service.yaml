@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-nodejs-shopping
+  namespace: shopping
+  labels:
+    app: shopping-nodejs-shopping
+    app.kubernetes.io/part-of: shopping
+    app.kubernetes.io/component: nodejs-shopping
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: shopping-nodejs-shopping
+    app.kubernetes.io/part-of: shopping
+    app.kubernetes.io/component: nodejs-shopping
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+      protocol: TCP

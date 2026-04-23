@@ -1,0 +1,4 @@
+{
+  "SPRING_DATASOURCE_URL": "jdbc:mysql://mysql:3306/appdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC",
+  "SPRING_DATASOURCE_USERNAME": "admin"
+}

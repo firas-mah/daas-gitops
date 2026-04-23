@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-nodejs-shopping
+  namespace: shopping
+  labels:
+    app: shopping-nodejs-shopping
+    app.kubernetes.io/part-of: shopping
+    app.kubernetes.io/component: nodejs-shopping
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopping-nodejs-shopping
+      app.kubernetes.io/part-of: shopping
+      app.kubernetes.io/component: nodejs-shopping
+  template:
+    metadata:
+      labels:
+        app: shopping-nodejs-shopping
+        app.kubernetes.io/part-of: shopping
+        app.kubernetes.io/component: nodejs-shopping
+    spec:
+      containers:
+        - name: nodejs-shopping
+          image: docker.io/firasmah/shopping-nodejs-shopping:run-1776979996741-nodejs-shopping
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: shopping-nodejs-shopping-secrets
+                optional: true
+            - configMapRef:
+                name: shopping-nodejs-shopping-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
