@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trial-scan-temp
+  namespace: trial
+  labels:
+    app: trial-scan-temp
+    app.kubernetes.io/part-of: trial
+    app.kubernetes.io/component: scan-temp
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trial-scan-temp
+      app.kubernetes.io/part-of: trial
+      app.kubernetes.io/component: scan-temp
+  template:
+    metadata:
+      labels:
+        app: trial-scan-temp
+        app.kubernetes.io/part-of: trial
+        app.kubernetes.io/component: scan-temp
+    spec:
+      containers:
+        - name: scan-temp
+          image: docker.io/firasmah/trial-scan-temp:run-1776961399567-scan-temp
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: trial-scan-temp-secrets
+                optional: true
+            - configMapRef:
+                name: trial-scan-temp-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
