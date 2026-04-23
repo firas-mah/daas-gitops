@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rrreeee-nodejs-shopping
+  namespace: rrreeee
+  labels:
+    app: rrreeee-nodejs-shopping
+    app.kubernetes.io/part-of: rrreeee
+    app.kubernetes.io/component: nodejs-shopping
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rrreeee-nodejs-shopping
+      app.kubernetes.io/part-of: rrreeee
+      app.kubernetes.io/component: nodejs-shopping
+  template:
+    metadata:
+      labels:
+        app: rrreeee-nodejs-shopping
+        app.kubernetes.io/part-of: rrreeee
+        app.kubernetes.io/component: nodejs-shopping
+    spec:
+      containers:
+        - name: nodejs-shopping
+          image: docker.io/firasmah/rrreeee-nodejs-shopping:run-1776978366392-nodejs-shopping
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: rrreeee-nodejs-shopping-secrets
+                optional: true
+            - configMapRef:
+                name: rrreeee-nodejs-shopping-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
