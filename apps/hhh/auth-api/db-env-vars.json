@@ -1,0 +1,4 @@
+{
+  "REDIS_HOST": "redis-queue",
+  "REDIS_PORT": "6379"
+}

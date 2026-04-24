@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hhh-auth-api
+  namespace: hhh
+  labels:
+    app: hhh-auth-api
+    app.kubernetes.io/part-of: hhh
+    app.kubernetes.io/component: auth-api
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hhh-auth-api
+      app.kubernetes.io/part-of: hhh
+      app.kubernetes.io/component: auth-api
+  template:
+    metadata:
+      labels:
+        app: hhh-auth-api
+        app.kubernetes.io/part-of: hhh
+        app.kubernetes.io/component: auth-api
+    spec:
+      containers:
+        - name: auth-api
+          image: docker.io/firasmah/hhh-auth-api:run-1777072519042-auth-api
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: hhh-auth-api-secrets
+                optional: true
+            - configMapRef:
+                name: hhh-auth-api-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
