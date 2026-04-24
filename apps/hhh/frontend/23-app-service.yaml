@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hhh-frontend
+  namespace: hhh
+  labels:
+    app: hhh-frontend
+    app.kubernetes.io/part-of: hhh
+    app.kubernetes.io/component: frontend
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: hhh-frontend
+    app.kubernetes.io/part-of: hhh
+    app.kubernetes.io/component: frontend
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP

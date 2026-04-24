@@ -4,5 +4,6 @@ resources:
   - 00-namespace.yaml
   - auth-api
   - db
+  - frontend
   - log-message-processor
   - todos-api
