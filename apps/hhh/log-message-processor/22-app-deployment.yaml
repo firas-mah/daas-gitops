@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hhh-log-message-processor
+  namespace: hhh
+  labels:
+    app: hhh-log-message-processor
+    app.kubernetes.io/part-of: hhh
+    app.kubernetes.io/component: log-message-processor
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hhh-log-message-processor
+      app.kubernetes.io/part-of: hhh
+      app.kubernetes.io/component: log-message-processor
+  template:
+    metadata:
+      labels:
+        app: hhh-log-message-processor
+        app.kubernetes.io/part-of: hhh
+        app.kubernetes.io/component: log-message-processor
+    spec:
+      containers:
+        - name: log-message-processor
+          image: docker.io/firasmah/hhh-log-message-processor:run-1777072519291-log-message-processor
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: hhh-log-message-processor-secrets
+                optional: true
+            - configMapRef:
+                name: hhh-log-message-processor-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
