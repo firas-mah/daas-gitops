@@ -1,0 +1,4 @@
+{
+  "SPRING_DATA_MONGODB_URI": "mongodb://admin:newmono-mongodb-pass@mongodb:27017/appdb?authSource=admin",
+  "MONGODB_URI": "mongodb://admin:newmono-mongodb-pass@mongodb:27017/appdb?authSource=admin"
+}
