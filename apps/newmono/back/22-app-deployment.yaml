@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: back
-          image: docker.io/firasmah/newmono-back:run-1777250854010-back
+          image: docker.io/firasmah/newmono-back:push-1777295668554-back
           ports:
             - containerPort: 8081
               protocol: TCP
