@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newmono-back
+  namespace: newmono
+  labels:
+    app: newmono-back
+    app.kubernetes.io/part-of: newmono
+    app.kubernetes.io/component: back
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: newmono-back
+      app.kubernetes.io/part-of: newmono
+      app.kubernetes.io/component: back
+  template:
+    metadata:
+      labels:
+        app: newmono-back
+        app.kubernetes.io/part-of: newmono
+        app.kubernetes.io/component: back
+    spec:
+      containers:
+        - name: back
+          image: docker.io/firasmah/newmono-back:run-1777250162099-back
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: newmono-back-secrets
+                optional: true
+            - configMapRef:
+                name: newmono-back-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
