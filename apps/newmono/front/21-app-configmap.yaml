@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: newmono-front-config
-  namespace: newmono
-data:
-  _placeholder: "empty"
