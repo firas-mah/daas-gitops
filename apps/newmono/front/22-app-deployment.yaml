@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: front
-          image: docker.io/firasmah/newmono-front:run-1777250854434-front
+          image: docker.io/firasmah/newmono-front:push-1777300373555-front
           ports:
             - containerPort: 80
               protocol: TCP
