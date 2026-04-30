@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ss-log-message-processor
+  namespace: ss
+  labels:
+    app: ss-log-message-processor
+    app.kubernetes.io/part-of: ss
+    app.kubernetes.io/component: log-message-processor
+    managed-by: daas
+spec:
+  type: ClusterIP
+  selector:
+    app: ss-log-message-processor
+    app.kubernetes.io/part-of: ss
+    app.kubernetes.io/component: log-message-processor
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+      protocol: TCP
