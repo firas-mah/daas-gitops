@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: de-back-config
+  namespace: de
+data:
+  _placeholder: "empty"
