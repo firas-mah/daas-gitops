@@ -1,0 +1,6 @@
+{
+  "USERS_API_ADDRESS": "http://users-api:8083",
+  "ZIPKIN_URL": "http://zipkin:9411/api/v2/spans",
+  "REDIS_HOST": "redis-queue",
+  "REDIS_PORT": "6379"
+}

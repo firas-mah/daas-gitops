@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ss-auth-api
+  namespace: ss
+  labels:
+    app: ss-auth-api
+    app.kubernetes.io/part-of: ss
+    app.kubernetes.io/component: auth-api
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ss-auth-api
+      app.kubernetes.io/part-of: ss
+      app.kubernetes.io/component: auth-api
+  template:
+    metadata:
+      labels:
+        app: ss-auth-api
+        app.kubernetes.io/part-of: ss
+        app.kubernetes.io/component: auth-api
+    spec:
+      containers:
+        - name: auth-api
+          image: docker.io/firasmah/ss-auth-api:run-1777533931433-auth-api
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: ss-auth-api-secrets
+                optional: true
+            - configMapRef:
+                name: ss-auth-api-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
