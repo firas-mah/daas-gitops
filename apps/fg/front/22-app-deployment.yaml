@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fg-front
+  namespace: fg
+  labels:
+    app: fg-front
+    app.kubernetes.io/part-of: fg
+    app.kubernetes.io/component: front
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fg-front
+      app.kubernetes.io/part-of: fg
+      app.kubernetes.io/component: front
+  template:
+    metadata:
+      labels:
+        app: fg-front
+        app.kubernetes.io/part-of: fg
+        app.kubernetes.io/component: front
+    spec:
+      containers:
+        - name: front
+          image: docker.io/firasmah/fg-front:run-1777527151469-front
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: fg-front-secrets
+                optional: true
+            - configMapRef:
+                name: fg-front-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
