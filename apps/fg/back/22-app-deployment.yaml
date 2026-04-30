@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fg-back
+  namespace: fg
+  labels:
+    app: fg-back
+    app.kubernetes.io/part-of: fg
+    app.kubernetes.io/component: back
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fg-back
+      app.kubernetes.io/part-of: fg
+      app.kubernetes.io/component: back
+  template:
+    metadata:
+      labels:
+        app: fg-back
+        app.kubernetes.io/part-of: fg
+        app.kubernetes.io/component: back
+    spec:
+      containers:
+        - name: back
+          image: docker.io/firasmah/fg-back:run-1777527150645-back
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: fg-back-secrets
+                optional: true
+            - configMapRef:
+                name: fg-back-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
