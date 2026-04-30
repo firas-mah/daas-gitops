@@ -1,4 +1,0 @@
-{
-  "SPRING_DATA_MONGODB_URI": "mongodb://admin:df-mongodb-pass@mongodb:27017/appdb?authSource=admin",
-  "MONGODB_URI": "mongodb://admin:df-mongodb-pass@mongodb:27017/appdb?authSource=admin"
-}
