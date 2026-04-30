@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ss-todos-api
+  namespace: ss
+  labels:
+    app: ss-todos-api
+    app.kubernetes.io/part-of: ss
+    app.kubernetes.io/component: todos-api
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ss-todos-api
+      app.kubernetes.io/part-of: ss
+      app.kubernetes.io/component: todos-api
+  template:
+    metadata:
+      labels:
+        app: ss-todos-api
+        app.kubernetes.io/part-of: ss
+        app.kubernetes.io/component: todos-api
+    spec:
+      containers:
+        - name: todos-api
+          image: docker.io/firasmah/ss-todos-api:run-1777533932077-todos-api
+          ports:
+            - containerPort: 8082
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: ss-todos-api-secrets
+                optional: true
+            - configMapRef:
+                name: ss-todos-api-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8082
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8082
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
