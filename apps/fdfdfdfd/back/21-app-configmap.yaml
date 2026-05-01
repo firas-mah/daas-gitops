@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fdfdfdfd-back-config
+  namespace: fdfdfdfd
+data:
+  _placeholder: "empty"

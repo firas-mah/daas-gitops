@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fdfdfdfd-back
+  namespace: fdfdfdfd
+  labels:
+    app: fdfdfdfd-back
+    app.kubernetes.io/part-of: fdfdfdfd
+    app.kubernetes.io/component: back
+    managed-by: daas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fdfdfdfd-back
+      app.kubernetes.io/part-of: fdfdfdfd
+      app.kubernetes.io/component: back
+  template:
+    metadata:
+      labels:
+        app: fdfdfdfd-back
+        app.kubernetes.io/part-of: fdfdfdfd
+        app.kubernetes.io/component: back
+    spec:
+      containers:
+        - name: back
+          image: docker.io/firasmah/fdfdfdfd-back:run-1777620503098-back
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: fdfdfdfd-back-secrets
+                optional: true
+            - configMapRef:
+                name: fdfdfdfd-back-config
+                optional: true
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          readinessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
