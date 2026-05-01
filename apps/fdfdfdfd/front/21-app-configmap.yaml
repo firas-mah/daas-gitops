@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fdfdfdfd-front-config
+  namespace: fdfdfdfd
+data:
+  _placeholder: "empty"
