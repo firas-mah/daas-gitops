@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dfdfdfdf-back-config
+  namespace: dfdfdfdf
+data:
+  _placeholder: "empty"
