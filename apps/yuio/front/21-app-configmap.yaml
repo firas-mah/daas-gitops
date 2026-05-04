@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: yuio-front-config
+  namespace: yuio
+data:
+  _placeholder: "empty"
