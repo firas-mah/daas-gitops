@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jojo-front-config
+  namespace: jojo
+data:
+  _placeholder: "empty"
